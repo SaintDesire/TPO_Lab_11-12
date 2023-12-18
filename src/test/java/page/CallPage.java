@@ -25,6 +25,8 @@ public class CallPage extends BasePage {
     private WebElement submitButton;
     @FindBy(xpath = "(//input[@name='accepted_policy'])[3]")
     private WebElement checkBox;
+    @FindBy(xpath = "//button[contains(@class, 'js-accept-cookies')]")
+    private WebElement cookiesButton;
 
     @FindBy(xpath = "/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]")
     private WebElement captchaButton;
@@ -39,14 +41,15 @@ public class CallPage extends BasePage {
     }
 
     public void fillCallForm(String name, String phone) throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", callForm);
+        js.executeScript("arguments[0].scrollIntoViewIfNeeded();", callForm);
         callForm.click();
         nameInput.sendKeys(name);
         log.info("Name send");
         phoneInput.sendKeys(phone);
         log.info("Phone send");
+        cookiesButton.click();
         checkBox.click();
         log.info("CheckBox click");
         submitButton.click();
